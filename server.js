@@ -4,7 +4,7 @@ const app= express();
 
 
 app.get('/', (req,res)=>{
-    res.send('hello world');
+    res.send('Kya bolti company kamaliya bahut money......., ae vedeya ');
 })
 
 const PORT= process.env.PORT;
