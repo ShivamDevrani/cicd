@@ -24,8 +24,8 @@ jobs:
             script: |
               cd /home/ubuntu/cicd
               git pull origin main
-              docker stop cicd-container || true
-              docker rm cicd-container || true
-              docker build -t cicd .
-              docker run -d --name cicd-container -p 8000:8000 -e PORT=8000 cicd
+              sudo docker stop cicd-container || true
+              sudo docker rm cicd-container || true
+              sudo docker build -t cicd .
+              sudo docker run -d --name cicd-container -p 8000:8000 -e PORT=8000 cicd
               
