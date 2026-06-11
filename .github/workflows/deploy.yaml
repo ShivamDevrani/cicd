@@ -3,7 +3,7 @@ name: Deploy node js app to ec2 server
 on :
   push:
     branches:
-      -main
+      - main
 
 
 jobs:
@@ -22,10 +22,10 @@ jobs:
             key: ${{ secrets.EC2_KEY }}
             port: 22
             script: |
-              /home/ubuntu/cicd
+              cd /home/ubuntu/cicd
               git pull origin main
               docker stop cicd-container || true
               docker rm cicd-container || true
               docker build -t cicd .
-              docker run -d --name cicd-container -p 8000:8000 cicd -e PORT=8000
+              docker run -d --name cicd-container -p 8000:8000 -e PORT=8000 cicd
               
