@@ -1,0 +1,31 @@
+name: Deploy node js app to ec2 server
+
+on :
+  push:
+    branches:
+      -main
+
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Deploy via SSH
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_USER }}
+            key: ${{ secrets.EC2_KEY }}
+            port: 22
+            script: |
+              /home/ubuntu/cicd
+              git pull origin main
+              docker stop cicd-container || true
+              docker rm cicd-container || true
+              docker build -t cicd .
+              docker run -d --name cicd-container -p 8000:8000 cicd -e PORT=8000
+              
